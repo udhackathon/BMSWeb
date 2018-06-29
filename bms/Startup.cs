@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -34,7 +34,10 @@ namespace bms
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseMvc();
-        }
+          app.UseMvc(routes =>
+          {
+            routes.MapRoute("default", "api/{controller=About}/{action=Get}/{id?}");
+          });
+    }
     }
 }
