@@ -14,7 +14,7 @@ namespace bms.Controllers
     [HttpGet]
     public string Get()
     {
-      return "UD Truck Hackathon - Buffer Managemenet System";
+      return "UD Truck Hackathon - Buffer Managemenet System - "+ DateTime.Now.ToLongDateString().ToString();
     }
   }
 }
