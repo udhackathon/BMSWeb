@@ -17,6 +17,8 @@ namespace BMS.Infrastructure.Data
     }
 
     public DbSet<Inventory> Inventory { get; set; }
+    public DbSet<Location> Location { get; set; }
+    public DbSet<Warehouse> Warehouse { get; set; }
 
     public override int SaveChanges()
     {

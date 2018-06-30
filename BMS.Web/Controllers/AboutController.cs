@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using BMS.Core.Entities;
 using BMS.Core.Interfaces;
+using BMS.Infrastructure.Data;
+using BMS.Web;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,10 +16,14 @@ namespace bms.Controllers
   public class AboutController : Controller
   {
     private readonly IRepository<Inventory> _inventoryRepository;
+    private readonly IRepository<Location> _locationRepository;
+    private readonly AppDbContext _dbContext;
 
-    public AboutController(IRepository<Inventory> inventoryRepository)
+    public AboutController(IRepository<Inventory> inventoryRepository,AppDbContext dbContext, IRepository<Location> locationRepository)
     {
+      _dbContext = dbContext;
       _inventoryRepository = inventoryRepository;
+      _locationRepository = locationRepository;
     }
 
     [HttpGet]
@@ -26,6 +32,19 @@ namespace bms.Controllers
       return "UD Truck Hackathon - Buffer Managemenet System - " + DateTime.Now.ToLongDateString().ToString();
     }
 
+    [HttpGet("SeedMasterData")]
+    public string SeedMasterData()
+    {
+      SeedData.PopulateTestData(_dbContext);
+      return "Done";
+    }
+
+    [HttpGet("GetLocations")]
+    public IActionResult GetLocations()
+    {
+      var item = _locationRepository.List();
+      return Ok(item);
+    }
     //[HttpGet]
     //public IActionResult List()
     //{

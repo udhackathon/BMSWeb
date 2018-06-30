@@ -1,3 +1,5 @@
+using BMS.Core.Entities;
+using System;
 using System.Collections.Generic;
 
 namespace BMS.Core.SharedKernel
@@ -6,6 +8,9 @@ namespace BMS.Core.SharedKernel
   public abstract class BaseEntity
   {
     public int Id { get; set; }
+    public User CreatedBy { get; set; }
+    public DateTime CreatedOn { get; set; }
+    public DateTime ModifiedOn { get; set; } = DateTime.Now;
 
     public List<BaseDomainEvent> Events = new List<BaseDomainEvent>();
   }
