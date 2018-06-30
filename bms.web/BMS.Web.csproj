@@ -19,8 +19,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\domains\Bms.Core\BMS.Core.csproj" />
-    <ProjectReference Include="..\domains\BMS.Infrastructure\BMS.Infrastructure.csproj" />
+    <ProjectReference Include="..\BMS.Core\BMS.Core.csproj" />
+    <ProjectReference Include="..\BMS.Infrastructure\BMS.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>
