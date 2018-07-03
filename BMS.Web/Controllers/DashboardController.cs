@@ -9,9 +9,9 @@ namespace BMS.Web.Controllers
   public class DashboardController : Controller
   {
     public PartsService _partsService;
-    public DashboardController()
+    public DashboardController(PartsService partsService)
     {
-      _partsService = new PartsService();
+      _partsService = partsService;
     }
     [HttpGet("Index")]
     public IActionResult Index()

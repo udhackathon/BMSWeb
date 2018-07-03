@@ -14,9 +14,9 @@ namespace BMS.Web.Controllers
   public class PartsController : Controller
   {
     public PartsService _partsService;
-    public PartsController()
+    public PartsController(PartsService partsService)
     {
-      _partsService = new PartsService();
+      _partsService = partsService;
     }
 
     // GET: Parts
