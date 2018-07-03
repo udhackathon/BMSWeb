@@ -12,23 +12,25 @@ namespace BMS.Web.Controllers
   [Produces("application/json")]
   [Route("api/parts")]
   public class PartsController : Controller
-    {
+  {
     public PartsService _partsService;
     public PartsController()
     {
       _partsService = new PartsService();
     }
-        
-        // GET: Parts
-        public ActionResult Index()
-        {
-            return View();
-        }
-        [HttpGet]
-        // GET: Parts/Details/5
-        public Parts Details()
-        {
-          return _partsService.getPartInfo();
-        }       
+
+    // GET: Parts
+    [HttpGet("Index")]
+    public ActionResult Index()
+    {
+      return View();
     }
+
+    [HttpGet("Details")]
+    // GET: Parts/Details/5
+    public Parts Details()
+    {
+      return _partsService.getPartInfo();
+    }
+  }
 }

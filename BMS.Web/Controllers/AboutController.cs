@@ -33,10 +33,10 @@ namespace bms.Controllers
     }
 
     [HttpGet("SeedMasterData")]
-    public string SeedMasterData()
+    public IActionResult SeedMasterData()
     {
       SeedData.PopulateTestData(_dbContext);
-      return "Done";
+      return Ok();
     }
 
     [HttpGet("GetLocations")]
