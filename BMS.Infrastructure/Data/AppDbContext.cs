@@ -16,9 +16,13 @@ namespace BMS.Infrastructure.Data
       _dispatcher = dispatcher;
     }
 
+    public DbSet<User> User { get; set; }
     public DbSet<Inventory> Inventory { get; set; }
+    public DbSet<InventoryLocation> InventoryLocation { get; set; }
     public DbSet<Location> Location { get; set; }
     public DbSet<Warehouse> Warehouse { get; set; }
+    public DbSet<BinLocation> BinLocation { get; set; }
+    public DbSet<PartDetails> Part { get; set; }
 
     public override int SaveChanges()
     {

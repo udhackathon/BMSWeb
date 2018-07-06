@@ -7,6 +7,5 @@ namespace BMS.Core.Entities
   {
     public BinLocation BinLocation { get; set; }
     public int Quantity { get; set; }
-    public Inventory Inventory { get; set; }
   }
 }

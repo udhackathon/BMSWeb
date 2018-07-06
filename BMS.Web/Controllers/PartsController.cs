@@ -30,7 +30,8 @@ namespace BMS.Web.Controllers
     // GET: Parts/Details/5
     public Parts Details()
     {
-      return _partsService.getPartInfo();
+      //return _partsService.getPartInfo();
+      return new Parts();
     }
   }
 }

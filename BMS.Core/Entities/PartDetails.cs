@@ -1,4 +1,3 @@
-using BMS.Core.Events;
 using BMS.Core.SharedKernel;
 using System.Collections.Generic;
 
