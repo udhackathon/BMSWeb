@@ -29,8 +29,8 @@ namespace bms
     {
       string dbName = Guid.NewGuid().ToString();
       services.AddDbContext<AppDbContext>(options =>
-      options.UseInMemoryDatabase(dbName));
-      //options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+      //options.UseInMemoryDatabase(dbName));
+      options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
       services.AddMvc()
           .AddControllersAsServices();
@@ -81,6 +81,12 @@ namespace bms
         app.UseExceptionHandler("/Home/Error");
         //app.UseHsts();
       }
+
+      DefaultFilesOptions DefaultFile = new DefaultFilesOptions();
+      DefaultFile.DefaultFileNames.Clear();
+      DefaultFile.DefaultFileNames.Add("index.html");
+      app.UseDefaultFiles(DefaultFile);
+      app.UseStaticFiles();
 
       //app.UseHttpsRedirection();
       //app.UseStaticFiles();

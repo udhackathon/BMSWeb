@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css" href="http://www.shieldui.com/shared/components/latest/css/light/all.min.css" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script type="text/javascript" src="http://www.shieldui.com/shared/components/latest/js/shieldui-all.min.js"></script>
+  <meta charset="utf-8" />
+  <title></title>
+</head>
+<body>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3>Locaton Allocation</h3>
+          </div>
+          <div class="panel-body">
+            <div id="quarterChart"></div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3>Inventory Movement</h3>
+          </div>
+          <div id="detailChart" class="panel-body">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- you need to include the shieldui css and js assets in order for the charts to work -->
+</body>
+<script type="text/javascript">
+  jQuery(function ($) {
+    var performanceData = [
+      { quarter: 0, min: 3, max: 9, values: [12, 3, 4, 2, 12, 3, 4, 17, 22, 34, 54, 67] },
+      { quarter: 1, min: 12, max: 23, values: [3, 9, 12, 14, 22, 32, 45, 12, 67, 45, 55, 7] },
+      { quarter: 2, min: 1, max: 17, values: [23, 19, 11, 134, 242, 352, 435, 22, 637, 445, 555, 57] },
+      { quarter: 3, min: -3, max: 12, values: [13, 19, 112, 114, 212, 332, 435, 132, 67, 45, 55, 7] }
+    ];
+    $(function () {
+      $("#quarterChart").shieldChart({
+        exportOptions: {
+          image: false,
+          print: false
+        },
+        seriesSettings: {
+          rangebar: {
+            enablePointSelection: true
+          }
+        },
+        tooltipSettings: {
+          customPointText: "Low Value: <b>{point.low}</b><br />High Value:<b>{point.high}</b>"
+        },
+        axisY: {
+          title: {
+            text: "Quarter Overview"
+          }
+        },
+        axisX: {
+          categoricalValues: ["Q1", "Q2", "Q3", "Q4"]
+        },
+        primaryHeader: {
+          text: "Location Availability"
+        },
+        dataSeries: [{
+          seriesType: "rangebar",
+          collectionAlias: "Low/High",
+          data: $.map(performanceData, function (item, index) {
+            return [[item.min, item.max]];
+          })
+        }],
+        events: {
+          pointSelect: function (args) {
+            var detailData = performanceData[args.point.x].values,
+              detailChartElement = $("#detailChart"),
+              detailChart = detailChartElement.swidget(),
+              initialOptions = detailChart.initialOptions,
+              headerText = args.point.name + " Performance";
+            detailChart.destroy();
+            detailChartElement.shieldChart($.extend(initialOptions, {
+              primaryHeader: {
+                text: headerText
+              },
+              dataSeries: [{
+                seriesType: "line",
+                collectionAlias: "Inventory Size",
+                data: detailData
+              }]
+            }));
+          }
+        }
+      });
+      $("#detailChart").shieldChart({
+        exportOptions: {
+          image: false,
+          print: false
+        },
+        axisY: {
+          title: {
+            text: "Break-Down for inventory"
+          }
+        },
+        primaryHeader: {
+          text: "Inventory Utilization"
+        },
+        dataSeries: [{
+          seriesType: "line",
+          collectionAlias: "Inventry Data",
+          data: performanceData[0].values
+        }]
+      });
+    });
+  });
+</script>
+</html>
