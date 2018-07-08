@@ -29,8 +29,8 @@ namespace bms
     {
       string dbName = Guid.NewGuid().ToString();
       services.AddDbContext<AppDbContext>(options =>
-      //options.UseInMemoryDatabase(dbName));
-      options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+      options.UseInMemoryDatabase(dbName));
+      //options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
       services.AddMvc()
           .AddControllersAsServices();
