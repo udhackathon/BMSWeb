@@ -28,7 +28,7 @@ namespace BMS.Web.Controllers
       if (token == usertoken)
       {
         SeedData.PopulateTestData(_dbContext);
-        return Ok();
+        return Ok("Master data seeded successfully");
       }
       else
         return Ok("wrong token passed");
