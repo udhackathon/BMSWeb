@@ -31,7 +31,7 @@ namespace BMS.Web.Controllers
         return Ok();
       }
       else
-        return Ok("wrong token "+usertoken);
+        return Ok("wrong token passed");
     }
 
     [HttpGet("About")]
