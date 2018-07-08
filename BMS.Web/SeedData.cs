@@ -36,7 +36,7 @@ namespace BMS.Web
       {
         dbContext.Remove(binloc);
       }
-      foreach (var partDetail in dbContext.Part)
+      foreach (var partDetail in dbContext.PartDetails)
       {
         dbContext.Remove(partDetail);
       }
@@ -66,12 +66,12 @@ namespace BMS.Web
       dbContext.BinLocation.Add(binLocation1);
       dbContext.BinLocation.Add(binLocation2);
 
-      var part1 = new PartDetails() { Id = 1, Name = "Part1", CreatedBy = user1, CreatedOn = DateTime.Now };
-      var part2 = new PartDetails() { Id = 2, Name = "Part2", CreatedBy = user1, CreatedOn = DateTime.Now };
-      var part3 = new PartDetails() { Id = 3, Name = "Part3", CreatedBy = user1, CreatedOn = DateTime.Now };
-      dbContext.Part.Add(part1);
-      dbContext.Part.Add(part2);
-      dbContext.Part.Add(part3);
+      var part1 = new PartDetails() { Id = 1, Name = "Part1", PartNo = "asd123", CreatedBy = user1, CreatedOn = DateTime.Now };
+      var part2 = new PartDetails() { Id = 2, Name = "Part2", PartNo = "asd124", CreatedBy = user1, CreatedOn = DateTime.Now };
+      var part3 = new PartDetails() { Id = 3, Name = "Part3", PartNo = "asd125", CreatedBy = user1, CreatedOn = DateTime.Now };
+      dbContext.PartDetails.Add(part1);
+      dbContext.PartDetails.Add(part2);
+      dbContext.PartDetails.Add(part3);
 
 
       var inventoryLoc1 = new InventoryLocation() { Id = 1, BinLocation = binLocation1, Quantity = 50, CreatedBy = user1, CreatedOn = DateTime.Now }; 
@@ -80,7 +80,7 @@ namespace BMS.Web
       dbContext.InventoryLocation.Add(inventoryLoc2);
 
 
-      var inventory1 = new Inventory() { Id = 1, QRCode="QR420", Description = "Description1", TotalQuantity = 100, Part = part1, InventoryLocations = new List<InventoryLocation>() { inventoryLoc1 , inventoryLoc2}, CreatedBy = user1, CreatedOn = DateTime.Now }; 
+      var inventory1 = new Inventory() { Id = 1, QRCode="QR420",Warehouse=warehouse1, Description = "Description1", TotalQuantity = 100, Part = part1, InventoryLocations = new List<InventoryLocation>() { inventoryLoc1 , inventoryLoc2}, CreatedBy = user1, CreatedOn = DateTime.Now }; 
       dbContext.Inventory.Add(inventory1);
 
 

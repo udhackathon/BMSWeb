@@ -44,5 +44,9 @@ namespace BMS.Infrastructure.Data
       _dbContext.Entry(entity).State = EntityState.Modified;
       _dbContext.SaveChanges();
     }
+    public IQueryable<T> ListQuery(string[] includedNavigationProperties)
+    {
+      return _dbContext.Set<T>().IncludeSubset(includedNavigationProperties);
+    }
   }
 }

@@ -1,63 +1,63 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="BMS.Core.Entities.Inventory" Collapsed="true">
-    <Position X="4.5" Y="0.75" Width="1.5" />
+    <Position X="2.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAgAAAAAAAAAAAAAAAEAAQAAAAAAAAgAAA=</HashCode>
+      <HashCode>AAAAAAAAIABgAAAAAEAAAAAAAAAAAAQAAAAAAAAAAAA=</HashCode>
       <FileName>Entities\Inventory.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="BMS.Core.Entities.Location" Collapsed="true">
-    <Position X="2.75" Y="1.75" Width="1.5" />
+    <Position X="0.75" Y="1.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAgAAAAAAAAEAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Entities\Location.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="BMS.Core.Entities.Warehouse" Collapsed="true">
-    <Position X="2.75" Y="2.75" Width="1.5" />
+    <Position X="0.75" Y="2.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAgAAAAAAIAEAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Entities\Warehouse.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="BMS.Core.Entities.PartDetails" Collapsed="true">
-    <Position X="4.5" Y="1.75" Width="1.5" />
+    <Position X="2.5" Y="1.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAIAAAAAAA=</HashCode>
       <FileName>Entities\PartDetails.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="BMS.Core.Entities.InventoryLocation" Collapsed="true">
-    <Position X="6.25" Y="0.75" Width="1.5" />
+    <Position X="4.25" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAggAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAgAAAAAA=</HashCode>
       <FileName>Entities\InventoryLocation.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="BMS.Core.Entities.BinLocation" Collapsed="true">
-    <Position X="2.75" Y="0.75" Width="1.5" />
+    <Position X="0.75" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAgAAAAAAAAgAQAAAAAAAAACAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAgAAAAAAAAgAQCAAAAAAAACAAAAAAAAAA=</HashCode>
       <FileName>Entities\BinLocation.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="BMS.Core.Entities.User" Collapsed="true">
-    <Position X="6.25" Y="1.75" Width="1.5" />
+    <Position X="4.25" Y="1.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAEAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Entities\User.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Enum Name="BMS.Core.Entities.Role" Collapsed="true">
-    <Position X="4.5" Y="4" Width="1.5" />
+    <Position X="2.5" Y="3.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAABAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAg=</HashCode>
       <FileName>Entities\Role.cs</FileName>
     </TypeIdentifier>
   </Enum>
   <Enum Name="BMS.Core.Entities.BinningType" Collapsed="true">
-    <Position X="2.75" Y="4" Width="1.5" />
+    <Position X="0.75" Y="3.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA=</HashCode>
       <FileName>Entities\BinningType.cs</FileName>

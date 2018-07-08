@@ -15,14 +15,20 @@ namespace BMS.Infrastructure.Data
     {
       _dispatcher = dispatcher;
     }
-
+    
     public DbSet<User> User { get; set; }
     public DbSet<Inventory> Inventory { get; set; }
     public DbSet<InventoryLocation> InventoryLocation { get; set; }
     public DbSet<Location> Location { get; set; }
     public DbSet<Warehouse> Warehouse { get; set; }
     public DbSet<BinLocation> BinLocation { get; set; }
-    public DbSet<PartDetails> Part { get; set; }
+    public DbSet<PartDetails> PartDetails { get; set; }
+
+    //protected override void OnModelCreating(ModelBuilder modelBuilder)
+    //{
+    //  modelBuilder.Entity<Inventory>()
+    //    .HasKey(k => new { k.Id, k.Warehouse });
+    //}
 
     public override int SaveChanges()
     {
@@ -45,6 +51,17 @@ namespace BMS.Infrastructure.Data
       }
 
       return result;
+    }
+  }
+
+  public static class EFHelper {
+    public static IQueryable<T> IncludeSubset<T>(this IQueryable<T> query, params string[] navProperties)
+    where T : class
+    {
+      foreach (var navProperty in navProperties)
+        query = query.Include(navProperty);
+
+      return query;
     }
   }
 }

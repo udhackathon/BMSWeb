@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using BMS.Core.SharedKernel;
 
 namespace BMS.Core.Interfaces
@@ -10,5 +11,6 @@ namespace BMS.Core.Interfaces
     T Add(T entity);
     void Update(T entity);
     void Delete(T entity);
+    IQueryable<T> ListQuery(string[] includedNavigationProperties);
   }
 }
