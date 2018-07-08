@@ -24,13 +24,14 @@ namespace BMS.Web.Controllers
     [HttpPost("SeedMasterData{token}")]
     public IActionResult SeedMasterData(string token)
     {
-      if (token == Configuration["usertoken"])
+      var usertoken = Configuration["usertoken"];
+      if (token == usertoken)
       {
         SeedData.PopulateTestData(_dbContext);
         return Ok();
       }
       else
-        return Forbid();
+        return Ok("wrong token "+usertoken);
     }
 
     [HttpGet("About")]
