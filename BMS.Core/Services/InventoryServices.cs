@@ -13,14 +13,17 @@ namespace BMS.Core.Services
     private readonly IRepository<Location> _locationRepository;
     private readonly IRepository<Warehouse> _warehouseRepository;
     private readonly IRepository<BinLocation> _binLocationRepository;
+    private readonly IRepository<PartDetails> _partDetailsRepository;
 
     public InventoryService(IRepository<Inventory> inventoryRepository, IRepository<Location> locationRepository,
-      IRepository<Warehouse> warehouseRepository, IRepository<BinLocation> binLocationRepository)
+      IRepository<Warehouse> warehouseRepository, IRepository<BinLocation> binLocationRepository,
+      IRepository<PartDetails> partDetailsRepository)
     {
       _inventoryRepository = inventoryRepository;
       _locationRepository = locationRepository;
       _warehouseRepository = warehouseRepository;
       _binLocationRepository = binLocationRepository;
+      _partDetailsRepository = partDetailsRepository;
     }
 
     public IList<PartDetails> AllPartsInWarehouse(int warehouseId)
@@ -49,11 +52,49 @@ namespace BMS.Core.Services
       return inventories.Where(i=>i.Warehouse.Id==warehouseid).ToList();
     }
 
-    public IList<Inventory> FindInventories(string QRCode, int WarehouseId)
+    public IQueryable<Inventory> FindInventoriesQuery()
     {
       string[] includedNavigationProperties = new string[] { "Warehouse", "Part", "InventoryLocations" };
-      var inventories = _inventoryRepository.ListQuery(includedNavigationProperties);
-      return inventories.Where(i => i.QRCode == QRCode && i.Warehouse.Id == WarehouseId).ToList();
+      return _inventoryRepository.ListQuery(includedNavigationProperties);
+    }
+    public IList<Inventory> FindInventories(string QRCode)
+    {
+      var inventories = FindInventoriesQuery();
+      return inventories.Where(i => i.QRCode == QRCode).ToList();
+    }
+
+    public Inventory GenerateSNP(int warehouseId, int partId, int quantity,string description)
+    {
+      var inventoriesQuery = FindInventoriesQuery();
+      var inventories = inventoriesQuery.Where(i => i.Part.Id == partId && i.Warehouse.Id == warehouseId).ToList();
+      if (inventories == null || !inventories.Any())
+        return NewSNP(warehouseId, partId, quantity, description);
+      else
+        return inventories.First(); 
+    }
+
+    private Inventory NewSNP(int warehouseId, int partId, int quantity,string description)
+    {
+      var part = _partDetailsRepository.GetById(partId);
+      var qrcode = GenerateQrCode(warehouseId,part.PartNo);
+      var warehouse = _warehouseRepository.GetById(warehouseId);
+      
+      var inventory = new Inventory
+      {
+        QRCode = qrcode,
+        Warehouse = warehouse,
+        Description = description,
+        TotalQuantity = quantity,
+        Part = part,
+        CreatedOn = DateTime.Now
+      };
+      _inventoryRepository.Add(inventory);
+      return inventory;
+    }
+
+    private string GenerateQrCode(int warehouseId, string partNo)
+    {
+      return "Q" + warehouseId.ToString() + partNo + DateTime.Now.ToString("yyyymmdd");
     }
 
     public IList<Location> GetLocations()

@@ -54,11 +54,10 @@ namespace BMS.Web.Controllers
       return Ok(_inventoryService.FindInventories(WarehouseId)); //return all inventory
     }
 
-
-    [HttpGet("{QRCode},{WarehouseId}")]
-    public IActionResult Get(string QRCode, int WarehouseId)
+    [HttpGet("{QRCode}")]
+    public IActionResult Get(string QRCode)
     {
-      return Ok(_inventoryService.FindInventories(QRCode, WarehouseId)); // return inventory filtered by qrCode
+      return Ok(_inventoryService.FindInventories(QRCode)); // return inventory filtered by qrCode
     }
 
     #endregion
@@ -70,10 +69,17 @@ namespace BMS.Web.Controllers
       return Ok(); // return SNP information
     }
 
-    [HttpPost("GenerateSNP")]
-    public IActionResult GenerateSNP([FromBody]InventoryModel inventoryModel)
+    [HttpPost("GenerateSNP{token}")]
+    public IActionResult GenerateSNP([FromBody]InventoryModel inventoryModel,string token)
     {
-      return Ok();
+      var usertoken = Configuration["usertoken"];
+      if (token == usertoken)
+      {
+        var inventory = _inventoryService.GenerateSNP(inventoryModel.WarehouseId, inventoryModel.PartId, inventoryModel.Quantity,inventoryModel.Remark);
+        return Ok(inventory);
+      }
+      else
+        return Ok("wrong token passed");
     }
 
     [HttpPost("InventoryUpdateQuantity")]

@@ -13,6 +13,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BMS.Infrastructure", "BMS.I
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BMS.Web", "BMS.Web\BMS.Web.csproj", "{5B0C3694-4168-4EF0-AF09-27FE091B19CE}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DBScript", "DBScript", "{7CBBCFFF-CABF-4F56-950A-7557F3A5C5F3}"
+	ProjectSection(SolutionItems) = preProject
+		BMSScript.sql = BMSScript.sql
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
