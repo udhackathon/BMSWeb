@@ -13,7 +13,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BMS.Infrastructure", "BMS.I
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DBScript", "DBScript", "{7CBBCFFF-CABF-4F56-950A-7557F3A5C5F3}"
 	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		.gitattributes = .gitattributes
+		.gitignore = .gitignore
+		.mailmap = .mailmap
 		BMSScript.sql = BMSScript.sql
+		Contributing.adoc = Contributing.adoc
+		LICENSE = LICENSE
+		README.adoc = README.adoc
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BMS.Web", "BMSWeb\BMS.Web.csproj", "{A92EF7AD-54A4-4A38-AEA5-64FD44EF14EC}"
