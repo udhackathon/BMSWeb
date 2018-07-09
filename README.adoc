@@ -1,1 +1,13 @@
-Web API project for BMS Mobile app
+# Web API project for BMS Mobile app
+
+## Steps:
+
+- Create project & set startup project in build configuration
+
+**  DOTNET_STARTUP_PROJECT ** to BMSWeb/BMS.Web.csproj
+
+- Set secret & value in Resources>Secrets
+
+- Add secret to the project
+
+- Add webhook to in GitHib. Edit build config for webhook url & secret from advance option
