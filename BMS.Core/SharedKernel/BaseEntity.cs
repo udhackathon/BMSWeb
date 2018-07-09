@@ -9,8 +9,8 @@ namespace BMS.Core.SharedKernel
   // This can be modified to BaseEntity<TId> to support multiple key types (e.g. Guid)
   public abstract class BaseEntity
   {
-    //[Key]
-    //[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; set; }
     public User CreatedBy { get; set; }
     public DateTime CreatedOn { get; set; }

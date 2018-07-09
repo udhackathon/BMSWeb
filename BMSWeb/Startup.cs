@@ -101,10 +101,7 @@ namespace bms
         c.SwaggerEndpoint("/swagger/v1/swagger.json", "BMS API - V1");
       });
 
-      app.UseMvc(routes =>
-      {
-        routes.MapRoute("default", "api/{controller=About}/{action=Get}/{id?}");
-      });
+      app.UseMvc();
     }
   }
 }
