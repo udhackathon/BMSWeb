@@ -3,6 +3,7 @@ using BMS.Infrastructure.Data;
 using BMS.Web.Model;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using ZXing.QrCode;
 
 namespace BMS.Web.Controllers
 {
@@ -14,7 +15,7 @@ namespace BMS.Web.Controllers
     public IInventoryService _inventoryService;
     private readonly AppDbContext _dbContext;
     public IConfiguration Configuration { get; set; }
-    public InventoryController(IInventoryService inventoryService,AppDbContext dbContext, IConfiguration config)
+    public InventoryController(IInventoryService inventoryService, AppDbContext dbContext, IConfiguration config)
     {
       _dbContext = dbContext;
       _inventoryService = inventoryService;
@@ -63,6 +64,8 @@ namespace BMS.Web.Controllers
     #endregion
 
     #region ToDo
+    [HttpGet("GetQRDiagram")]
+    
     [HttpGet("GetSNPByInventoryId")]
     public IActionResult GetSNP(int inventoryId)
     {
@@ -70,12 +73,12 @@ namespace BMS.Web.Controllers
     }
 
     [HttpPost("GenerateSNP{token}")]
-    public IActionResult GenerateSNP([FromBody]InventoryModel inventoryModel,string token)
+    public IActionResult GenerateSNP([FromBody]InventoryModel inventoryModel, string token)
     {
       var usertoken = Configuration["usertoken"];
       if (token == usertoken)
       {
-        var inventory = _inventoryService.GenerateSNP(inventoryModel.WarehouseId, inventoryModel.PartId, inventoryModel.Quantity,inventoryModel.Remark);
+        var inventory = _inventoryService.GenerateSNP(inventoryModel.WarehouseId, inventoryModel.PartId, inventoryModel.Quantity, inventoryModel.Remark);
         return Ok(inventory);
       }
       else
@@ -88,7 +91,7 @@ namespace BMS.Web.Controllers
       return Ok();
     }
     #endregion
-    
+
     #region Location
     [HttpGet("GetLocations")]
     public IActionResult GetLocations()

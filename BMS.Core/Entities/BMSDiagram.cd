@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Class Name="BMS.Core.Entities.Inventory" Collapsed="true">
-    <Position X="2.5" Y="0.5" Width="1.5" />
+  <Class Name="BMS.Core.Entities.Inventory">
+    <Position X="2.5" Y="0.5" Width="2" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAIABgAAAAAEAAAAAAAAAAAAQAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAIABgAAAAAEAAAAAAAAAAAAQACAAAAAAAAAA=</HashCode>
       <FileName>Entities\Inventory.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -21,15 +21,15 @@
       <FileName>Entities\Warehouse.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="BMS.Core.Entities.PartDetails" Collapsed="true">
-    <Position X="2.5" Y="1.5" Width="1.5" />
+  <Class Name="BMS.Core.Entities.PartDetails">
+    <Position X="2.5" Y="2.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAIAAAAAAA=</HashCode>
       <FileName>Entities\PartDetails.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="BMS.Core.Entities.InventoryLocation" Collapsed="true">
-    <Position X="4.25" Y="0.5" Width="1.5" />
+  <Class Name="BMS.Core.Entities.InventoryLocation">
+    <Position X="5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAgAAAAAA=</HashCode>
       <FileName>Entities\InventoryLocation.cs</FileName>
@@ -42,15 +42,15 @@
       <FileName>Entities\BinLocation.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="BMS.Core.Entities.User" Collapsed="true">
-    <Position X="4.25" Y="1.5" Width="1.5" />
+  <Class Name="BMS.Core.Entities.User">
+    <Position X="5" Y="2.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAEAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Entities\User.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Enum Name="BMS.Core.Entities.Role" Collapsed="true">
-    <Position X="2.5" Y="3.75" Width="1.5" />
+  <Enum Name="BMS.Core.Entities.Role">
+    <Position X="2.5" Y="4.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAABAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAg=</HashCode>
       <FileName>Entities\Role.cs</FileName>
