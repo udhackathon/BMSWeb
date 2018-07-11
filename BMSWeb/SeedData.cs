@@ -57,9 +57,9 @@ namespace BMS.Web
       dbContext.Location.Add(location2);
 
       var warehouse1 = new Warehouse() {  Name = "Wearhouse1", Description = "W1Description", Location = location1, CreatedBy = user1, CreatedOn = DateTime.Now };
-      var warehouse2 = new Warehouse() {  Name = "Wearhouse2", Description = "W2Description", Location = location2, CreatedBy = user1, CreatedOn = DateTime.Now };
+      //var warehouse2 = new Warehouse() {  Name = "Wearhouse2", Description = "W2Description", Location = location2, CreatedBy = user1, CreatedOn = DateTime.Now };
       dbContext.Warehouse.Add(warehouse1);
-      dbContext.Warehouse.Add(warehouse2);
+      //dbContext.Warehouse.Add(warehouse2);
 
       var binLocation1 = new BinLocation() {  Name = "BinLoc1", Description = "BinLoc1Desc", BinType = BinningType.Prime, Warehouse = warehouse1, CreatedBy = user1, CreatedOn = DateTime.Now };
       var binLocation2 = new BinLocation() {  Name = "BinLoc2", Description = "BinLoc2Desc", BinType = BinningType.Buffer, Warehouse = warehouse1, CreatedBy = user1, CreatedOn = DateTime.Now };
@@ -80,7 +80,7 @@ namespace BMS.Web
       dbContext.InventoryLocation.Add(inventoryLoc2);
 
 
-      var inventory1 = new Inventory() {  QRCode="QR420",Warehouse=warehouse1, Description = "Description1", TotalQuantity = 100, Part = part1, InventoryLocations = new List<InventoryLocation>() { inventoryLoc1 , inventoryLoc2}, CreatedBy = user1, CreatedOn = DateTime.Now }; 
+      var inventory1 = new Inventory() {  QRCode="QR123456789",Warehouse=warehouse1, Description = "Description1", TotalQuantity = 100, Part = part1, InventoryLocations = new List<InventoryLocation>() { inventoryLoc1 , inventoryLoc2}, CreatedBy = user1, CreatedOn = DateTime.Now }; 
       dbContext.Inventory.Add(inventory1);
 
 

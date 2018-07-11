@@ -41,7 +41,10 @@ namespace BMS.Core.Services
 
     public IList<Inventory> FindInventories()
     {
-      return _inventoryRepository.List();
+      string[] includedNavigationProperties = new string[] { "Warehouse", "Part", "InventoryLocations", "InventoryLocations.BinLocation" };
+
+      var inventories = _inventoryRepository.ListQuery(includedNavigationProperties);
+      return inventories.ToList();
     }
 
     public IList<Inventory> FindInventories(int warehouseid)
@@ -160,6 +163,35 @@ namespace BMS.Core.Services
       }
 
       return result;
+    }
+
+    public IList<string> CheckInventoryThreshold(int wearhouseId)
+    {
+      IList<string> notifications = new List<string>();
+
+      var inventories = this.FindInventories(wearhouseId);
+      foreach (var inventory in inventories)
+      {
+        if(inventory.InventoryLocations != null && inventory.InventoryLocations.Count > 0)
+        {
+          var primeInventoryLocation = inventory.InventoryLocations.FirstOrDefault(w => w.BinLocation != null && w.BinLocation.BinType == BinningType.Prime);
+          if (primeInventoryLocation != null && primeInventoryLocation.Quantity < primeInventoryLocation.BinLocation.Capacity)
+          {
+            var bufferInventoryLocations = inventory.InventoryLocations.Where(w => w.BinLocation != null && w.BinLocation.BinType == BinningType.Buffer);
+            foreach (var bufferInventoryLocation in bufferInventoryLocations)
+            {
+              if(bufferInventoryLocation.Quantity > 0)
+              {
+                string notification = string.Format("Prime location {0} has space.", primeInventoryLocation.BinLocation.Name);
+                notifications.Add(notification);
+                break;
+              }
+            }
+          }
+        }
+      }
+
+      return notifications;
     }
   }
 }

@@ -85,7 +85,6 @@ namespace BMS.Web.Controllers
         return Ok("wrong token passed");
     }
 
-
     [HttpGet("GetPartInWearhouse")]
     public IActionResult GetPartInWearhouse(int wearhouseId)
     {
@@ -125,6 +124,12 @@ namespace BMS.Web.Controllers
     public IActionResult InventoryUpdateQuantity([FromBody]InventoryModel inventoryModel)
     {
       return Ok();
+    }
+
+    public IActionResult GetThresholdNotification(int wearhouseId)
+    {
+      IList<string> notifications = _inventoryService.CheckInventoryThreshold(wearhouseId);
+      return Ok(notifications);
     }
     #endregion
 
