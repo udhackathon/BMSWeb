@@ -126,6 +126,7 @@ namespace BMS.Web.Controllers
       return Ok();
     }
 
+    [HttpGet("GetThresholdNotification{wearhouseId}")]
     public IActionResult GetThresholdNotification(int wearhouseId)
     {
       IList<string> notifications = _inventoryService.CheckInventoryThreshold(wearhouseId);

@@ -79,9 +79,10 @@
 </body>
 
 <script>
-  var jsondata = d3.json("http://bms-bms.1d35.starter-us-east-1.openshiftapps.com/api/Inventory/GetPartInWearhouse?wearhouseId=1", function (jsondata) {
-    console.log(jsondata);
+  var jsondata = d3.json("http://bms-bms.1d35.starter-us-east-1.openshiftapps.com/api/Inventory/GetPartInWearhouse?wearhouseId=1", function (data) {
+    console.log(data);
   });
+  console.log(jsondata);
   var pie = new d3pie("quarterChart1", {
     "size": {
       "canvasHeight": 300,
