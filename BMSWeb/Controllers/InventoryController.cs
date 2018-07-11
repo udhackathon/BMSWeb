@@ -3,7 +3,8 @@ using BMS.Infrastructure.Data;
 using BMS.Web.Model;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-using ZXing.QrCode;
+using System;
+using System.Collections.Generic;
 
 namespace BMS.Web.Controllers
 {
@@ -64,9 +65,7 @@ namespace BMS.Web.Controllers
     #endregion
 
     #region ToDo
-    [HttpGet("GetQRDiagram")]
-    
-    [HttpGet("GetSNPByInventoryId")]
+    [HttpGet("GetSNPByInventoryId()")]
     public IActionResult GetSNP(int inventoryId)
     {
       return Ok(); // return SNP information
@@ -79,7 +78,43 @@ namespace BMS.Web.Controllers
       if (token == usertoken)
       {
         var inventory = _inventoryService.GenerateSNP(inventoryModel.WarehouseId, inventoryModel.PartId, inventoryModel.Quantity, inventoryModel.Remark);
+
         return Ok(inventory);
+      }
+      else
+        return Ok("wrong token passed");
+    }
+
+    [HttpGet("GetPartInWearhouse")]
+    public IActionResult GetPartInWearhouse(int wearhouseId)
+    {
+      var inventorys = _inventoryService.FindInventories(wearhouseId);
+
+      IList<PartQuantityModel> models = new List<PartQuantityModel>();
+      foreach (var inventory in inventorys)
+      {
+        var partQuantity = new PartQuantityModel()
+        {
+          PartName = inventory.Part.Name,
+          Quantity = inventory.TotalQuantity
+        };
+        models.Add(partQuantity);
+      }
+
+      return Ok(models);
+    }
+
+    [HttpPost("UpdateLocation{token}")]
+    public IActionResult UpdateLocation(string qrCode, int binLocationId, int quantity, string token)
+    {
+      var usertoken = Configuration["usertoken"];
+      if (token == usertoken)
+      {
+        bool result = _inventoryService.UpdateLocation(qrCode, binLocationId, quantity);
+        if (result)
+          return Ok();
+        else
+          return BadRequest();
       }
       else
         return Ok("wrong token passed");
@@ -89,6 +124,12 @@ namespace BMS.Web.Controllers
     public IActionResult InventoryUpdateQuantity([FromBody]InventoryModel inventoryModel)
     {
       return Ok();
+    }
+
+    public IActionResult GetThresholdNotification(int wearhouseId)
+    {
+      IList<string> notifications = _inventoryService.CheckInventoryThreshold(wearhouseId);
+      return Ok(notifications);
     }
     #endregion
 

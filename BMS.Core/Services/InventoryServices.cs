@@ -41,7 +41,10 @@ namespace BMS.Core.Services
 
     public IList<Inventory> FindInventories()
     {
-      return _inventoryRepository.List();
+      string[] includedNavigationProperties = new string[] { "Warehouse", "Part", "InventoryLocations", "InventoryLocations.BinLocation" };
+
+      var inventories = _inventoryRepository.ListQuery(includedNavigationProperties);
+      return inventories.ToList();
     }
 
     public IList<Inventory> FindInventories(int warehouseid)
@@ -111,6 +114,84 @@ namespace BMS.Core.Services
     {
       string[] includedNavigationProperties = new string[] { "Warehouse" };
       return _binLocationRepository.ListQuery(includedNavigationProperties).Where(i=>i.Warehouse.Id == warehouseId).ToList();
+    }
+
+    public bool UpdateLocation(string qrCode, int binLocationId, int quantity)
+    {
+      bool result = false;
+
+      string[] includedNavigationProperties = new string[] { "InventoryLocations", "InventoryLocations.BinLocation" };
+      var inventories = _inventoryRepository.ListQuery(includedNavigationProperties);
+      var inventory = inventories.FirstOrDefault(i => i.QRCode == qrCode);
+      if (inventory != null)
+      {        
+        if (inventory.InventoryLocations != null && inventory.InventoryLocations.Any())
+        {
+          var inventoryLoc = inventory.InventoryLocations.FirstOrDefault(f => f.BinLocation != null && f.BinLocation.Id == binLocationId);
+          if (inventoryLoc == null)
+          {
+            if (quantity > 0) //if quantity is greater than zero add InventoryLocation
+            {
+              var inventoryLocation = new InventoryLocation()
+              {
+                BinLocation = _binLocationRepository.GetById(binLocationId),
+                Quantity = quantity
+              };
+              inventory.InventoryLocations.Add(inventoryLocation);
+
+              _inventoryRepository.Update(inventory);
+              result = true;
+            }
+          }
+          else
+          {
+            //if quantity is zero remove InventoryLocation for given bin location
+            if (quantity == 0)
+            {
+              inventory.InventoryLocations.Remove(inventoryLoc);
+              _inventoryRepository.Update(inventory);
+            }
+            else
+            {
+              //update quantity of InventoryLocation with given bin location
+              inventoryLoc.Quantity = quantity;
+              _inventoryRepository.Update(inventory);
+            }
+            result = true;
+          }
+        }
+      }
+
+      return result;
+    }
+
+    public IList<string> CheckInventoryThreshold(int wearhouseId)
+    {
+      IList<string> notifications = new List<string>();
+
+      var inventories = this.FindInventories(wearhouseId);
+      foreach (var inventory in inventories)
+      {
+        if(inventory.InventoryLocations != null && inventory.InventoryLocations.Count > 0)
+        {
+          var primeInventoryLocation = inventory.InventoryLocations.FirstOrDefault(w => w.BinLocation != null && w.BinLocation.BinType == BinningType.Prime);
+          if (primeInventoryLocation != null && primeInventoryLocation.Quantity < primeInventoryLocation.BinLocation.Capacity)
+          {
+            var bufferInventoryLocations = inventory.InventoryLocations.Where(w => w.BinLocation != null && w.BinLocation.BinType == BinningType.Buffer);
+            foreach (var bufferInventoryLocation in bufferInventoryLocations)
+            {
+              if(bufferInventoryLocation.Quantity > 0)
+              {
+                string notification = string.Format("Prime location {0} has space.", primeInventoryLocation.BinLocation.Name);
+                notifications.Add(notification);
+                break;
+              }
+            }
+          }
+        }
+      }
+
+      return notifications;
     }
   }
 }
