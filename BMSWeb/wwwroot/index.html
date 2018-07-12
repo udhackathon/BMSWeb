@@ -9,7 +9,7 @@
 
   <script src="scripts/d3pie.min.js"></script>
   <script src="scripts/d3pie.min.js"></script>
-  <meta http-equiv="refresh" content="20" />
+  <!--<meta http-equiv="refresh" content="20" />-->
   <meta charset="utf-8" />
   <style>
     .bar {
@@ -26,7 +26,6 @@
 </head>
 
 <body>
-
   <!--<nav class="navbar">
     <div class="container-fluid">
       <div class="navbar-header">
@@ -76,6 +75,17 @@
           </div>
         </div>
       </div>
+      <div class="col-md-8">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <b>Parts Availability</b>
+          </div>
+          <div class="panel-body" style="padding:0;">
+            <div class="quarterChart4" style="padding:0;">
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
     <!--<div class="row">
       <div class="col-md-4">
@@ -107,12 +117,13 @@
       </div>
     </div>-->
   </div>
+
 </body>
 <script>
   var data1 = [];
   var data2 = [];
   var data3 = [];
-
+  var data4 = [];
   // Get JSON data and wait for the response
   d3.json(window.location.origin + "/api/Inventory/GetPartscapacity1?wearhouseId=1", function (error, json) {
     $.each(json, function (d, i) {
@@ -213,9 +224,74 @@
         return "translate(" + translate + ")";
       });
   });
+  let margin = { top: 10, right: 10, bottom: 50, left: 10 }
+  let width = 800 - margin.left - margin.right
+  let height = 500 - margin.top - margin.bottom
+  let x = d3.scaleBand()
+    .rangeRound([0, width])
+    .padding(0.5);
+  let y = d3.scaleLinear().range([height, 0])
 
+  let xAxis = d3.axisBottom(x)
+    .tickFormat((d) => {
+      return d.x;
+    });
 
-  
+  let yAxis = d3.axisLeft(y)
+
+  let svg = d3.select('.quarterChart4')
+    .append('svg')
+    .attr('width', width + margin.left + margin.right)
+    .attr('height', height + margin.top + margin.bottom)
+    .append('g')
+    .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
+  let url = window.location.origin + '/api/Inventory/GetPartscapacity1?warehouseId=1';
+
+  d3.json(url, (data) => {
+    x.domain(data.map((d) => {
+      return d.partNo
+    }))
+
+    y.domain([0, d3.max(data, (d) => {
+      return d.quantity
+    })]);
+
+    svg.append('g')
+      .attr('class', 'x axis')
+      .attr('transform', 'translate(0,' + height + ')')
+      .call(xAxis)
+      .selectAll('text')
+      .style('text-anchor', 'end')
+      .attr('dx', '-0.5em')
+      .attr('dy', '-55em')
+      .attr('y', 30)
+      .attr('transform', 'rotate(-45)');
+
+    svg.append('g')
+      .attr('class', 'y axis')
+      .call(yAxis)
+      .append('text')
+      .attr('transform', 'rotate(-90)')
+      .attr('y', 5)
+      .attr('dy', '0.8em')
+      .attr('text-anchor', 'end')
+      .text('Member Rank')
+
+    svg.selectAll('bar')
+      .data(data)
+      .enter()
+      .append('rect')
+      .style('fill', 'orange')
+      .attr('x', (d) => {
+        return x(d.partNo)
+      })
+      .attr('height', (d) => {
+        return y(d.quantity)
+      })
+      .attr("width", x.bandwidth())
+      .attr("y", (d) => height - y(d.quantity))
+  })
+
 
 </script>
 
