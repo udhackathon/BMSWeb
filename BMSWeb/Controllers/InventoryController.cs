@@ -62,15 +62,6 @@ namespace BMS.Web.Controllers
       return Ok(_inventoryService.FindInventories(QRCode)); // return inventory filtered by qrCode
     }
 
-    #endregion
-
-    #region ToDo
-    [HttpGet("GetSNPByInventoryId()")]
-    public IActionResult GetSNP(int inventoryId)
-    {
-      return Ok(); // return SNP information
-    }
-
     [HttpPost("GenerateSNP{token}")]
     public IActionResult GenerateSNP([FromBody]InventoryModel inventoryModel, string token)
     {
@@ -120,18 +111,46 @@ namespace BMS.Web.Controllers
         return Ok("wrong token passed");
     }
 
-    [HttpPost("InventoryUpdateQuantity")]
-    public IActionResult InventoryUpdateQuantity([FromBody]InventoryModel inventoryModel)
-    {
-      return Ok();
-    }
-
     [HttpGet("GetThresholdNotification{wearhouseId}")]
     public IActionResult GetThresholdNotification(int wearhouseId)
     {
       IList<string> notifications = _inventoryService.CheckInventoryThreshold(wearhouseId);
       return Ok(notifications);
     }
+    #endregion
+
+    #region ToDo
+    [HttpGet("GetSNPByInventoryId()")]
+    public IActionResult GetSNP(int inventoryId)
+    {
+      return Ok(); // return SNP information
+    }
+
+    [HttpGet("GetPartscapacity{GetPartscapacity}")]
+    public IActionResult GetPartscapacity(int warehouseId)
+    {
+      var model = new List<PartCapacityModel>();
+      model.Add(new PartCapacityModel { PartNo = "OIL FILTER", Capacity = 100, Quantity = 30 });
+      model.Add(new PartCapacityModel { PartNo = "FILTER KIT", Capacity = 90, Quantity = 100 });
+      model.Add(new PartCapacityModel { PartNo = "SPRING", Capacity = 80, Quantity = 70 });
+      model.Add(new PartCapacityModel { PartNo = "BUSHING", Capacity = 110, Quantity = 90 });
+      model.Add(new PartCapacityModel { PartNo = "SEIBI KIT", Capacity = 130, Quantity = 60 });
+      model.Add(new PartCapacityModel { PartNo = "DIAPHRAGM", Capacity = 70, Quantity = 50 });
+      return Ok(model); 
+    }
+
+
+
+
+
+
+    [HttpPost("InventoryUpdateQuantity")]
+    public IActionResult InventoryUpdateQuantity([FromBody]InventoryModel inventoryModel)
+    {
+      return Ok();
+    }
+
+   
     #endregion
 
     #region Location
