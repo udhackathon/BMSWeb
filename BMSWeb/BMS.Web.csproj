@@ -25,4 +25,8 @@
     <ProjectReference Include="..\BMS.Infrastructure\BMS.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\images\" />
+  </ItemGroup>
+
 </Project>
