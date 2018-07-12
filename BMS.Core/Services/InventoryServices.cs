@@ -49,7 +49,7 @@ namespace BMS.Core.Services
 
     public IList<Inventory> FindInventories(int warehouseid)
     {
-      string[] includedNavigationProperties = new string[] { "Warehouse","Part", "InventoryLocations" };
+      string[] includedNavigationProperties = new string[] { "Warehouse","Part", "InventoryLocations", "InventoryLocations.BinLocation" };
 
       var inventories = _inventoryRepository.ListQuery(includedNavigationProperties);
       return inventories.Where(i=>i.Warehouse.Id==warehouseid).ToList();
@@ -197,9 +197,23 @@ namespace BMS.Core.Services
     public IList<PartDetails> GetParts(string name)
     {
       string[] includedNavigationProperties = new string[] {  };
-      var part1 = _partDetailsRepository.ListQuery(includedNavigationProperties).Where(i => i.Name.Contains(name)).ToList();
-      var part2 = _partDetailsRepository.ListQuery(includedNavigationProperties).Where(i => i.PartNo.Contains(name)).ToList();
+      var part1 = _partDetailsRepository.ListQuery(includedNavigationProperties).Where(i => i.Name.Contains(name.ToUpper())).ToList();
+      var part2 = _partDetailsRepository.ListQuery(includedNavigationProperties).Where(i => i.PartNo.Contains(name.ToUpper())).ToList();
       return part1.Concat(part2).ToList();
+    }
+
+    public Inventory GetSNPByPartId(int partId)
+    {
+      string[] includedNavigationProperties = new string[] { "Part", "InventoryLocations", "InventoryLocations.BinLocation" };
+      var inventoryQuery = _inventoryRepository.ListQuery(includedNavigationProperties).Where(i=>i.Part.Id == partId);
+      return inventoryQuery.FirstOrDefault();
+    }
+
+    public Inventory GetInventoryByPartNo(string partNo)
+    {
+      string[] includedNavigationProperties = new string[] { "Part", "InventoryLocations", "InventoryLocations.BinLocation" };
+      var inventoryQuery = _inventoryRepository.ListQuery(includedNavigationProperties).Where(i => i.Part.PartNo == partNo.ToUpper());
+      return inventoryQuery.FirstOrDefault();
     }
   }
 }

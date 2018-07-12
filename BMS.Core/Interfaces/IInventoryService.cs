@@ -18,5 +18,7 @@ namespace BMS.Core.Interfaces
       bool UpdateLocation(string qrCode, int binLocationId, int quantity);
       IList<string> CheckInventoryThreshold(int wearhouseId);
       IList<PartDetails> GetParts(string name);
+      Inventory GetSNPByPartId(int partId);
+      Inventory GetInventoryByPartNo(string partNo);
   }
 }
