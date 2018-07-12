@@ -67,11 +67,12 @@
       <div class="col-md-8">
         <div class="panel panel-default">
           <div class="panel-heading">
-            <b>Bottom 5 Parts</b>
+            <b>Parts Availability</b>
           </div>
           <div class="panel-body" style="padding:0;">
-            <!--<div id="quarterChart3" style="padding:0;"></div>-->
-            <svg></svg>
+            <div id="quarterChart3" style="padding:0;">
+              <svg></svg>
+            </div>
           </div>
         </div>
       </div>
@@ -110,12 +111,13 @@
 <script>
   var data1 = [];
   var data2 = [];
+  var data3 = [];
 
   // Get JSON data and wait for the response
-  d3.json(window.location.origin + "/api/Inventory/GetPartInWearhouse?wearhouseId=1", function (error, json) {
+  d3.json(window.location.origin + "/api/Inventory/GetPartscapacity1?wearhouseId=1", function (error, json) {
     $.each(json, function (d, i) {
       data1.push({
-        label: i.partName,
+        label: i.partNo,
         value: i.quantity
       })
     })
@@ -127,7 +129,7 @@
       "size": {
         "canvasHeight": 300,
         "canvasWidth": 300,
-        "pieOuterRadius": "100%"
+        "pieOuterRadius": "80%"
       },
       "data": {
         "content": data1
@@ -136,13 +138,21 @@
         "outer": {
           "pieDistance": 0
         }
+      },
+      "misc": {
+        "canvasPadding": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
       }
     });
   });
-  d3.json(window.location.origin + "/api/Inventory/GetPartInWearhouse?wearhouseId=1", function (error, json) {
+  d3.json(window.location.origin + "/api/Inventory/GetPartscapacity1?wearhouseId=1", function (error, json) {
     $.each(json, function (d, i) {
       data2.push({
-        label: i.partName,
+        label: i.partNo,
         value: i.quantity
       })
     })
@@ -154,7 +164,7 @@
       "size": {
         "canvasHeight": 300,
         "canvasWidth": 300,
-        "pieOuterRadius": "100%"
+        "pieOuterRadius": "80%"
       },
       "data": {
         "content": data2
@@ -166,32 +176,46 @@
       }
     });
   });
+  d3.json(window.location.origin + "/api/Inventory/GetPartscapacity1?warehouseId=1", function (error, json) {
+    $.each(json, function (d, i) {
+      data3.push({
+
+        value: i.quantity
+      })
+    })
+    var svgWidth = 730;
+    var svgHeight = 300;
+    var svg = d3.select("#quarterChart3 svg")
+      .attr("width", svgWidth)
+      .attr("height", svgHeight)
+      .attr("class", "bar");
+
+    var dataset = data3;
+    var barPadding = 5;
+    var barWidth = (svgWidth / dataset.length);
+    var barChart = svg.selectAll("rect")
+      .data(dataset)
+      .enter()
+      .append("g")
+      .append("rect")
+      .attr("x", function (d) {
+        d.value;
+      })
+      .attr("y", function (d) {
+        return svgHeight - d.value
+      })
+      .attr("height", function (d) {
+        return d.value;
+      })
+      .attr("width", barWidth - barPadding)
+      .attr("transform", function (d, i) {
+        var translate = [barWidth * i, 0];
+        return "translate(" + translate + ")";
+      });
+  });
 
 
-  var svgWidth = 730;
-  var svgHeight = 300;
-  var svg = d3.select('svg')
-    .attr("width", svgWidth)
-    .attr("height", svgHeight)
-    .attr("class", "bar");
-  var dataset = [80, 100, 56, 120, 180, 30, 40, 120, 160, 10, 30, 60, 50, 40, 120, 160, 10, 30, 60, 50];
-  var barPadding = 5;
-  var barWidth = (svgWidth / dataset.length);
-  var barChart = svg.selectAll("rect")
-    .data(dataset)
-    .enter()
-    .append("rect")
-    .attr("y", function (d) {
-      return svgHeight - d
-    })
-    .attr("height", function (d) {
-      return d;
-    })
-    .attr("width", barWidth - barPadding)
-    .attr("transform", function (d, i) {
-      var translate = [barWidth * i, 0];
-      return "translate(" + translate + ")";
-    });
+  
 
 </script>
 
