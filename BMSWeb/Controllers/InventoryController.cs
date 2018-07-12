@@ -187,6 +187,14 @@ namespace BMS.Web.Controllers
     {
       return Ok(_inventoryService.AllPartsInWarehouse(WarehouseId)); //return all inventory
     }
+
+    [HttpGet("GetParts{name}")]
+    public IActionResult GetParts(string name)
+    {
+      return Ok(_inventoryService.GetParts(name)); //return all part
+    }
+
+
     #endregion
   }
 }

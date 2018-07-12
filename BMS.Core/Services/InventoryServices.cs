@@ -193,5 +193,13 @@ namespace BMS.Core.Services
 
       return notifications;
     }
+
+    public IList<PartDetails> GetParts(string name)
+    {
+      string[] includedNavigationProperties = new string[] {  };
+      var part1 = _partDetailsRepository.ListQuery(includedNavigationProperties).Where(i => i.Name.Contains(name)).ToList();
+      var part2 = _partDetailsRepository.ListQuery(includedNavigationProperties).Where(i => i.PartNo.Contains(name)).ToList();
+      return part1.Concat(part2).ToList();
+    }
   }
 }

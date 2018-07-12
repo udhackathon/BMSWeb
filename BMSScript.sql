@@ -190,7 +190,7 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [Warehouse](
-	[id] [int] IDENTITY(1,1) NOT NULL,
+	[id] [int] NOT NULL,
 	[Name] [nvarchar](50) NOT NULL,
 	[Description] [nvarchar](150) NULL,
 	[LocationID] [int] NULL,

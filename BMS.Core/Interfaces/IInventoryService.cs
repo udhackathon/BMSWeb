@@ -17,5 +17,6 @@ namespace BMS.Core.Interfaces
       Inventory GenerateSNP(int warehouseId, int partId, int quantity,string description);
       bool UpdateLocation(string qrCode, int binLocationId, int quantity);
       IList<string> CheckInventoryThreshold(int wearhouseId);
+      IList<PartDetails> GetParts(string name);
   }
 }
