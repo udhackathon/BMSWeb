@@ -10,6 +10,7 @@ namespace BMS.Web.Model
 
   public class UpdateInventoryModel
   {
+    public string MovementType { get; set; }
     public string QRCode { get; set; }
     public int BinLocationId { get; set; }
     public int Quantity { get; set; }

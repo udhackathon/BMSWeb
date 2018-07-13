@@ -116,7 +116,7 @@ namespace BMS.Core.Services
       return _binLocationRepository.ListQuery(includedNavigationProperties).Where(i=>i.Warehouse.Id == warehouseId).ToList();
     }
 
-    public bool UpdateLocation(string qrCode, int binLocationId, int quantity)
+    public bool UpdateLocation(string qrCode, int binLocationId, int quantity, string movementType)
     {
       bool result = false;
 
@@ -127,10 +127,15 @@ namespace BMS.Core.Services
       {        
         if (inventory.InventoryLocations != null && inventory.InventoryLocations.Any())
         {
-          var inventoryLoc = inventory.InventoryLocations.FirstOrDefault(f => f.BinLocation != null && f.BinLocation.Id == binLocationId);
+          InventoryLocation inventoryLoc = null;
+          if (movementType.Trim().ToLower().Equals("out")){
+            inventoryLoc = inventory.InventoryLocations.FirstOrDefault(f => f.BinLocation != null && f.BinLocation.BinType==BinningType.Prime);
+          }
+          else
+              inventoryLoc = inventory.InventoryLocations.FirstOrDefault(f => f.BinLocation != null && f.BinLocation.Id == binLocationId);
           if (inventoryLoc == null)
           {
-            if (quantity > 0) //if quantity is greater than zero add InventoryLocation
+            if (movementType.Trim().ToLower().Equals("in")) //if movement type is Inwards add InventoryLocation
             {
               var inventoryLocation = new InventoryLocation()
               {
@@ -138,23 +143,22 @@ namespace BMS.Core.Services
                 Quantity = quantity
               };
               inventory.InventoryLocations.Add(inventoryLocation);
-
               _inventoryRepository.Update(inventory);
               result = true;
             }
           }
           else
           {
-            //if quantity is zero remove InventoryLocation for given bin location
-            if (quantity == 0)
+            if (movementType.Trim().ToLower().Equals("out"))
             {
-              inventory.InventoryLocations.Remove(inventoryLoc);
+              inventoryLoc.Quantity -= quantity;
+              inventory.TotalQuantity = inventory.InventoryLocations.Sum(i => i.Quantity);
               _inventoryRepository.Update(inventory);
             }
-            else
+            else if (movementType.Trim().ToLower().Equals("in"))
             {
-              //update quantity of InventoryLocation with given bin location
               inventoryLoc.Quantity += quantity;
+              inventory.TotalQuantity = inventory.InventoryLocations.Sum(i => i.Quantity);
               _inventoryRepository.Update(inventory);
             }
             result = true;
