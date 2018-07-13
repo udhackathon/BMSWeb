@@ -96,13 +96,13 @@ namespace BMS.Web.Controllers
       return Ok(models);
     }
 
-    [HttpPost("UpdateLocation{token}")]
-    public IActionResult UpdateLocation(string qrCode, int binLocationId, int quantity, string token)
+    [HttpPost("UpdateLocation")]
+    public IActionResult UpdateLocation([FromBody]UpdateInventoryModel updateInventoryModel, string token)
     {
       var usertoken = Configuration["usertoken"];
       if (token == usertoken)
       {
-        bool result = _inventoryService.UpdateLocation(qrCode, binLocationId, quantity);
+        bool result = _inventoryService.UpdateLocation(updateInventoryModel.QRCode, updateInventoryModel.BinLocationId, updateInventoryModel.Quantity);
         if (result)
           return Ok();
         else

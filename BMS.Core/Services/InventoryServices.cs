@@ -154,7 +154,7 @@ namespace BMS.Core.Services
             else
             {
               //update quantity of InventoryLocation with given bin location
-              inventoryLoc.Quantity = quantity;
+              inventoryLoc.Quantity += quantity;
               _inventoryRepository.Update(inventory);
             }
             result = true;

@@ -7,4 +7,11 @@ namespace BMS.Web.Model
     public int Quantity { get; set; }
     public string Remark { get; set; }
   }
+
+  public class UpdateInventoryModel
+  {
+    public string QRCode { get; set; }
+    public int BinLocationId { get; set; }
+    public int Quantity { get; set; }
+  }
 }
