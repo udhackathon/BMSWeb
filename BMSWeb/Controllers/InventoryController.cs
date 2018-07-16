@@ -136,7 +136,7 @@ namespace BMS.Web.Controllers
 
     #region ToDo
 
-    [HttpGet("GetPartscapacity{GetPartscapacity}")]
+    [HttpGet("GetPartscapacity{warehouseId:int}")]
     public IActionResult GetPartscapacity(int warehouseId)
     {
       var model = new List<PartCapacityModel>();
@@ -191,7 +191,7 @@ namespace BMS.Web.Controllers
       return Ok(_inventoryService.AllPartsInWarehouse(WarehouseId)); //return all inventory
     }
 
-    [HttpGet("GetParts{name}")]
+    [HttpGet("GetParts")]
     public IActionResult GetParts(string name)
     {
       return Ok(_inventoryService.GetParts(name)); //return all part

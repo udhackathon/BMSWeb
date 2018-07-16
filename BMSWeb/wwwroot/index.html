@@ -2,76 +2,14 @@
 <html>
 <head>
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link href="css/bms.css" rel="stylesheet">
   <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
-  <script src="http://d3js.org/d3.v4.min.js" charset="utf-8"></script>
-
-  <script src="scripts/d3pie.min.js"></script>
-  <script src="scripts/d3pie.min.js"></script>
+  <script type="text/javascript" src="scripts/echarts.simple.min.js"></script>
   <!--<meta http-equiv="refresh" content="20" />-->
   <meta charset="utf-8" />
-  <style>
-    .bar {
-      fill: steelblue;
-    }
-      .bar:hover {
-        fill: brown;
-      }
-    .axis--x path {
-      display: none;
-    }
-    .header {
-      width: 100%;
-      height: 50px;
-      background-color: #e2001a;
-    }
-    .headerText {
-      font-family: 'Franklin Gothic Medium', 'Arial Narrow', 'Arial', 'sans-serif';
-      font-size: 25px;
-      font-weight: bolder;
-      padding-top: 5px;
-      color: azure;
-      margin-left: 5px;
-    }
-    .screen {
-      width: 90%;
-      margin-left: 5%;
-      margin-right: 5%;
-      margin-top: 1%;
-      margin-bottom: 1%;
-    }
-    .chart1 {
-      width: 30%;
-      height: 60%;
-      margin-top: 10px;
-      margin-right: 10px;
-      float: left;
-    }
-    .chart2 {
-      width: 60%;
-      height: 60%;
-      margin-top: 10px;
-      margin-right: 10px;
-      float: left;
-    }
-  </style>
   <title>BMS - Dashboard</title>
 </head>
-
 <body>
-  <!--<nav class="navbar">
-    <div class="container-fluid">
-      <div class="navbar-header">
-        <a class="navbar-brand">BMSystem - Dashboard</a>
-      </div>
-      <div class="collapse navbar-collapse" id="navbar-collapse">
-      </div>
-    </div>
-  </nav>-->
-
-
-
-
-
   <div class="header">
     <div class="headerText">
       <img src="images/ud_top-logo63x50.png" height="40" width="80" />
@@ -79,14 +17,14 @@
     </div>
   </div>
   <div class="screen">
-    <div class="row">
+    <div>
       <div class="chart1">
         <div class="panel panel-default">
           <div class="panel-heading">
             <b>Top 5 Parts</b>
           </div>
           <div class="panel-body" style="padding:0;">
-            <div id="quarterChart1" style="padding:0;"></div>
+            <div id="Top5Chart" style="padding:0;width:350px;height:450px"></div>
           </div>
         </div>
       </div>
@@ -96,242 +34,25 @@
             <b>Parts Availability</b>
           </div>
           <div class="panel-body" style="padding:0;">
-            <div id="quarterChart3" style="padding:0;">
-              <svg></svg>
-            </div>
-          </div>
-        </div>
-      </div>
-      </div>
-    <div class="row">
-      <div class="chart1">
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <b>Bottom 5 Parts</b>
-          </div>
-          <div class="panel-body" style="padding:0;">
-            <div id="quarterChart2" style="padding:0;"></div>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-8">
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <b>Parts Availability</b>
-          </div>
-          <div class="panel-body" style="padding:0;">
-            <div class="quarterChart4" style="padding:0;">
+            <div id="PartChart" style="padding:0;width:600px;height:450px">
             </div>
           </div>
         </div>
       </div>
     </div>
-    <!--<div class="row">
-      <div class="col-md-4">
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <b>Inventory Movement</b>
-          </div>
-          <div id="quarterChart4" class="panel-body">
-          </div>
+    <div class="chart1">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <b>Bottom 5 Parts</b>
+        </div>
+        <div class="panel-body" style="padding:0;">
+          <div id="Bottom5Chart" style="padding:0;width:350px;height:450px"></div>
         </div>
       </div>
-      <div class="col-md-4">
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <b>Inventory Movement</b>
-          </div>
-          <div id="quarterChart5" class="panel-body">
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4">
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <b>Inventory Movement</b>
-          </div>
-          <div id="quarterChart6" class="panel-body">
-          </div>
-        </div>
-      </div>
-    </div>-->
+    </div>
+   <div>
   </div>
-
+ </div>
 </body>
-<script>
-  var data1 = [];
-  var data2 = [];
-  var data3 = [];
-  var data4 = [];
-  // Get JSON data and wait for the response
-  d3.json(window.location.origin + "/api/Inventory/GetPartscapacity1?wearhouseId=1", function (error, json) {
-    $.each(json, function (d, i) {
-      data1.push({
-        label: i.partNo,
-        value: i.quantity
-      })
-    })
-
-    var pie = new d3pie("quarterChart1", {
-      "header": {
-        "location": "top-left"
-      },
-      "size": {
-        "canvasHeight": 300,
-        "canvasWidth": 300,
-        "pieOuterRadius": "80%"
-      },
-      "data": {
-        "content": data1
-      },
-      "labels": {
-        "outer": {
-          "pieDistance": 0
-        }
-      },
-      "misc": {
-        "canvasPadding": {
-          "top": 0,
-          "right": 0,
-          "bottom": 0,
-          "left": 0
-        }
-      }
-    });
-  });
-  d3.json(window.location.origin + "/api/Inventory/GetPartscapacity1?wearhouseId=1", function (error, json) {
-    $.each(json, function (d, i) {
-      data2.push({
-        label: i.partNo,
-        value: i.quantity
-      })
-    })
-
-    var pie = new d3pie("quarterChart2", {
-      "header": {
-        "location": "top-left"
-      },
-      "size": {
-        "canvasHeight": 300,
-        "canvasWidth": 300,
-        "pieOuterRadius": "80%"
-      },
-      "data": {
-        "content": data2
-      },
-      "labels": {
-        "outer": {
-          "pieDistance": 0
-        }
-      }
-    });
-  });
-  d3.json(window.location.origin + "/api/Inventory/GetPartscapacity1?warehouseId=1", function (error, json) {
-    $.each(json, function (d, i) {
-      data3.push({
-
-        value: i.quantity
-      })
-    })
-    var svgWidth = 730;
-    var svgHeight = 300;
-    var svg = d3.select("#quarterChart3 svg")
-      .attr("width", svgWidth)
-      .attr("height", svgHeight)
-      .attr("class", "bar");
-
-    var dataset = data3;
-    var barPadding = 5;
-    var barWidth = (svgWidth / dataset.length);
-    var barChart = svg.selectAll("rect")
-      .data(dataset)
-      .enter()
-      .append("g")
-      .append("rect")
-      .attr("x", function (d) {
-        d.value;
-      })
-      .attr("y", function (d) {
-        return svgHeight - d.value
-      })
-      .attr("height", function (d) {
-        return d.value;
-      })
-      .attr("width", barWidth - barPadding)
-      .attr("transform", function (d, i) {
-        var translate = [barWidth * i, 0];
-        return "translate(" + translate + ")";
-      });
-  });
-  let margin = { top: 10, right: 10, bottom: 50, left: 10 }
-  let width = 800 - margin.left - margin.right
-  let height = 500 - margin.top - margin.bottom
-  let x = d3.scaleBand()
-    .rangeRound([0, width])
-    .padding(0.5);
-  let y = d3.scaleLinear().range([height, 0])
-
-  let xAxis = d3.axisBottom(x)
-    .tickFormat((d) => {
-      return d.x;
-    });
-
-  let yAxis = d3.axisLeft(y)
-
-  let svg = d3.select('.quarterChart4')
-    .append('svg')
-    .attr('width', width + margin.left + margin.right)
-    .attr('height', height + margin.top + margin.bottom)
-    .append('g')
-    .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
-  let url = window.location.origin + '/api/Inventory/GetPartscapacity1?warehouseId=1';
-
-  d3.json(url, (data) => {
-    x.domain(data.map((d) => {
-      return d.partNo
-    }))
-
-    y.domain([0, d3.max(data, (d) => {
-      return d.quantity
-    })]);
-
-    svg.append('g')
-      .attr('class', 'x axis')
-      .attr('transform', 'translate(0,' + height + ')')
-      .call(xAxis)
-      .selectAll('text')
-      .style('text-anchor', 'end')
-      .attr('dx', '-0.5em')
-      .attr('dy', '-55em')
-      .attr('y', 30)
-      .attr('transform', 'rotate(-45)');
-
-    svg.append('g')
-      .attr('class', 'y axis')
-      .call(yAxis)
-      .append('text')
-      .attr('transform', 'rotate(-90)')
-      .attr('y', 5)
-      .attr('dy', '0.8em')
-      .attr('text-anchor', 'end')
-      .text('Member Rank')
-
-    svg.selectAll('bar')
-      .data(data)
-      .enter()
-      .append('rect')
-      .style('fill', 'orange')
-      .attr('x', (d) => {
-        return x(d.partNo)
-      })
-      .attr('height', (d) => {
-        return y(d.quantity)
-      })
-      .attr("width", x.bandwidth())
-      .attr("y", (d) => height - y(d.quantity))
-  })
-
-
-</script>
-
+<script type="text/javascript" src="scripts/bms.js"></script>
 </html>

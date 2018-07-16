@@ -1,0 +1,46 @@
+.bar {
+  fill: steelblue;
+}
+
+  .bar:hover {
+    fill: brown;
+  }
+
+.axis--x path {
+  display: none;
+}
+
+.header {
+  width: 100%;
+  height: 60px;
+  background-color: #e2001a;
+}
+
+.headerText {
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', 'Arial', 'sans-serif';
+  font-size: 25px;
+  font-weight: bolder;
+  padding-top: 10px;
+  color: azure;
+  margin-left: 5px;
+}
+
+.screen {
+  margin-left: 0.5%;
+  margin-right: 0.5%;
+  margin-top: 2%;
+}
+
+.chart1 {
+  margin-top: 10px;
+  margin-right: 10px;
+  float: left;
+  width: 295px;
+  overflow: hidden;
+}
+
+.chart2 {
+  margin-top: 10px;
+  margin-right: 10px;
+  float: left;
+}

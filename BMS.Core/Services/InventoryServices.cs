@@ -52,7 +52,7 @@ namespace BMS.Core.Services
       string[] includedNavigationProperties = new string[] { "Warehouse","Part", "InventoryLocations", "InventoryLocations.BinLocation" };
 
       var inventories = _inventoryRepository.ListQuery(includedNavigationProperties);
-      return inventories.Where(i=>i.Warehouse.Id==warehouseid).ToList();
+      return inventories.Where(i=>i.Warehouse.Id==warehouseid).OrderBy(i=>i.TotalQuantity).ToList();
     }
 
     public IQueryable<Inventory> FindInventoriesQuery()
