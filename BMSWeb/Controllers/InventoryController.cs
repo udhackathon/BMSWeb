@@ -102,7 +102,7 @@ namespace BMS.Web.Controllers
       var usertoken = Configuration["usertoken"];
       if (token == usertoken)
       {
-        bool result = _inventoryService.UpdateLocation(updateInventoryModel.QRCode, updateInventoryModel.BinLocationId, updateInventoryModel.Quantity);
+        bool result = _inventoryService.UpdateLocation(updateInventoryModel.QRCode, updateInventoryModel.BinLocationId, updateInventoryModel.Quantity, updateInventoryModel.MovementType);
         if (result)
           return Ok();
         else
